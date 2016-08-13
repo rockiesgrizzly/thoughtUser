@@ -1,0 +1,6 @@
+framework module Pods_ThoughtUserTests {
+  umbrella header "Pods-ThoughtUserTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
