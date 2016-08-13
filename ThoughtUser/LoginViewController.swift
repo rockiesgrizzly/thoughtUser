@@ -22,6 +22,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     var dataHandler: DataHandler? = DataHandler()
     
+    let localNotifier = NSNotificationCenter.defaultCenter()
+    
     var validatedFields = [FieldNames.username: false,
                            FieldNames.email: false,
                            FieldNames.password: false,
@@ -35,6 +37,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         setupDelegation()
         updateSubmitButtonInteraction()
+
     }
     
     
@@ -48,9 +51,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         dataHandler?.resetModelToOriginalValues()
     }
     
+    deinit {
+        localNotifier.removeObserver(self)
+    }
+    
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.Portrait
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     
     
     func setupDelegation() {
@@ -283,7 +295,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         dataHandler?.resetModelToOriginalValues()
     }
-    
     
     
 }
