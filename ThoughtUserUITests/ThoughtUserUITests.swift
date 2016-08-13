@@ -28,6 +28,119 @@ class ThoughtUserUITests: XCTestCase {
         super.tearDown()
     }
     
+    func test_elementsExist() {
+        let app = XCUIApplication()
+
+        XCTAssert(app.staticTexts["ThoughtUser"].exists)
+        XCTAssert(app.textFields["Username"].exists)
+        XCTAssert(app.textFields["Email"].exists)
+        XCTAssert(app.secureTextFields["Password"].exists)
+        XCTAssert(app.secureTextFields["Verify Password"].exists)
+        XCTAssert(app.textFields["Display Name (Optional)"].exists)
+        XCTAssert(app.buttons["Submit"].exists)
+    }
+    
+    
+    func testValidatedText_ShouldAllowSubmit() {
+        let app = XCUIApplication()
+        app.textFields["Username"].tap()
+        app.textFields["Username"].typeText("Bono")
+
+        app.textFields["Email"].tap()
+        app.textFields["Email"].typeText("bono@u2.com")
+        
+        app.secureTextFields["Password"].tap()
+        app.secureTextFields["Password"].typeText("achtungBaby3")
+        
+        app.secureTextFields["Verify Password"].tap()
+        app.secureTextFields["Verify Password"].typeText("achtungBaby3")
+        
+        app.textFields["Display Name (Optional)"].tap()
+        app.buttons["Submit"].tap()
+        
+        let successAlert = XCUIApplication().alerts["Success!"]
+            //.staticTexts["Success!"]
+        
+        XCTAssert(successAlert.exists)
+        
+        
+//        XCTAssert(app.alerts["Success"].exists)
+//        let dismissButton = app.alerts["Not Success!"].collectionViews.buttons["Dismiss"]
+    }
+    
+    func testInvalidatedText_ShouldNotAllowSubmit() {
+        let app = XCUIApplication()
+        app.textFields["Username"].tap()
+        app.textFields["Username"].typeText("B")
+        
+        app.textFields["Email"].tap()
+        app.textFields["Email"].typeText("b")
+        
+        app.secureTextFields["Password"].tap()
+        app.secureTextFields["Password"].typeText("a")
+        
+        app.secureTextFields["Verify Password"].tap()
+        app.secureTextFields["Verify Password"].typeText("a")
+        
+        app.textFields["Display Name (Optional)"].tap()
+        app.buttons["Submit"].tap()
+        
+        let failureAlert = XCUIApplication().alerts["The form isn't quite ready..."]
+            //.collectionViews.buttons["Dismiss"].tap()
+        
+        XCTAssert(failureAlert.exists)
+    }
+    
+    
+    func testPassWordsDontMatchText_ShouldNotAllowSubmit() {
+        let app = XCUIApplication()
+        app.textFields["Username"].tap()
+        app.textFields["Username"].typeText("Bono")
+        
+        app.textFields["Email"].tap()
+        app.textFields["Email"].typeText("bono@u2.com")
+        
+        app.secureTextFields["Password"].tap()
+        app.secureTextFields["Password"].typeText("achtungBaby4")
+        
+        app.secureTextFields["Verify Password"].tap()
+        app.secureTextFields["Verify Password"].typeText("achtungBaby3")
+        
+        app.textFields["Display Name (Optional)"].tap()
+        app.buttons["Submit"].tap()
+        
+        let failureAlert = XCUIApplication().alerts["The form isn't quite ready..."]
+        //.collectionViews.buttons["Dismiss"].tap()
+        
+        XCTAssert(failureAlert.exists)
+        
+    }
+    
+    func testUserEmailIdenticalText_ShouldNotAllowSubmit() {
+        let app = XCUIApplication()
+        app.textFields["Username"].tap()
+        app.textFields["Username"].typeText("bono@u2.com")
+        
+        app.textFields["Email"].tap()
+        app.textFields["Email"].typeText("bono@u2.com")
+        
+        app.secureTextFields["Password"].tap()
+        app.secureTextFields["Password"].typeText("achtungBaby4")
+        
+        app.secureTextFields["Verify Password"].tap()
+        app.secureTextFields["Verify Password"].typeText("achtungBaby3")
+        
+        app.textFields["Display Name (Optional)"].tap()
+        app.buttons["Submit"].tap()
+        
+        let failureAlert = XCUIApplication().alerts["The form isn't quite ready..."]
+        //.collectionViews.buttons["Dismiss"].tap()
+        
+        XCTAssert(failureAlert.exists)
+        
+    }
+    
+
 
     
 }

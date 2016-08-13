@@ -9,6 +9,7 @@
 import XCTest
 import OHHTTPStubs
 
+
 @testable import ThoughtUser
 
 class LoginViewControllerTests: XCTestCase {

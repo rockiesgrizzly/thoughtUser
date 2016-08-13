@@ -14,6 +14,7 @@ target 'ThoughtUser' do
     # Pods for testing
         pod 'OHHTTPStubs'
         pod 'OHHTTPStubs/Swift'
+
   end
 
   target 'ThoughtUserUITests' do
