@@ -29,6 +29,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                            FieldNames.password: false,
                            FieldNames.passwordVerification: false]
     
+    var allTextFields: [UITextField]!
+    
     
     
     //MARK: Lifecycle
@@ -37,6 +39,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         setupDelegation()
         updateSubmitButtonInteraction()
+        
+        allTextFields = [userNameField, emailField, passwordField, passwordVerificationField, displayNameField]
 
     }
     
@@ -51,34 +55,45 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         dataHandler?.resetModelToOriginalValues()
     }
     
+    
     deinit {
         localNotifier.removeObserver(self)
+        
+        for field in allTextFields {
+            field.removeTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
+        }
     }
+    
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.Portrait
     }
+    
     
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
     
     
-    
     func setupDelegation() {
-        userNameField.delegate = self
-        emailField.delegate = self
-        passwordField.delegate = self
-        passwordVerificationField.delegate = self
-        displayNameField.delegate = self
+        for field in allTextFields {
+            field.delegate = self
+        }
     }
-
     
     
     //MARK: TextField Handling
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+    func textFieldDidBeginEditing(textField: UITextField) {
+        textField.addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
+    }
+    
+    
+    func textFieldDidEndEditing(textField: UITextField) {
         validateTextFromTextField(textField)
-        return true
+    }
+    
+    func textFieldDidChange(textField: UITextField) {
+        validateTextFromTextField(textField)
     }
     
     
@@ -172,7 +187,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if validated == true {
             textField.backgroundColor = UIColor(red: 214 / 255, green: 255 / 255, blue: 218 / 255, alpha: 1.0)
         } else if textField.text != "" {
-            textField.backgroundColor = UIColor(red: 255 / 255, green: 216 / 255, blue: 219 / 255, alpha: 1.0)
+            textField.backgroundColor = UIColor(red: 230 / 255, green: 230 / 255, blue: 230 / 255, alpha: 1.0)
         } else {
             textField.backgroundColor = UIColor.whiteColor()
         }
@@ -278,17 +293,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     func resetModelAndFields() {
-        userNameField.text = ""
-        emailField.text = ""
-        passwordField.text = ""
-        passwordVerificationField.text = ""
-        displayNameField.text = ""
+        for field in allTextFields {
+            field.text = ""
+            field.backgroundColor = UIColor.whiteColor()
+        }
+
         
-        
-        userNameField.backgroundColor = UIColor.whiteColor()
-        emailField.backgroundColor = UIColor.whiteColor()
-        passwordField.backgroundColor = UIColor.whiteColor()
-        displayNameField.backgroundColor = UIColor.whiteColor()
+        userNameField.becomeFirstResponder()
         
         readyToSubmit = false
         updateSubmitButtonInteraction()
