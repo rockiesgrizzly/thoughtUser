@@ -6,14 +6,12 @@ target 'ThoughtUser' do
   use_frameworks!
 
   # Pods for ThoughtUser
-        pod 'OHHTTPStubs'
-        pod 'OHHTTPStubs/Swift'
+
 
   target 'ThoughtUserTests' do
     inherit! :search_paths
     # Pods for testing
-        pod 'OHHTTPStubs'
-        pod 'OHHTTPStubs/Swift'
+
 
   end
 

@@ -37,17 +37,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        allTextFields = [userNameField, emailField, passwordField, passwordVerificationField, displayNameField]
         setupDelegation()
         updateSubmitButtonInteraction()
-        
-        allTextFields = [userNameField, emailField, passwordField, passwordVerificationField, displayNameField]
-
     }
     
     
     override func viewWillAppear(animated: Bool) {
         super.viewDidLoad()
-        resetModelAndFields()
+        resetModelAndFields()     
     }
     
     
@@ -104,6 +102,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 where text.characters.count > 2 {
                 
                 updateValuesForValidateFields(true, textField: textField, fieldName: FieldNames.username, text: text)
+                
+                //set username as display name if no display name
+                if dataHandler?.userDict[FieldNames.display_name] == nil {
+                    dataHandler?.updateModelWithFieldText(FieldNames.display_name, string: text)
+                }
+                
             } else {
                 updateValuesForValidateFields(false, textField: textField, fieldName: FieldNames.username, text: nil)
             }

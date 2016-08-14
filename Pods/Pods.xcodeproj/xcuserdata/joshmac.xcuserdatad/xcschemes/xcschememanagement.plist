@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>OHHTTPStubs.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-ThoughtUser.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,17 +22,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4932C5DCD199DFFD9E4C6F6F97A8BC9C</key>
+		<key>4F1E0FC810E3D611C5C73EC22929F756</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>65068B06081E7C3728E201FD9DED25E5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AE2F5138BD532540C9BBC3741B8E0A16</key>
+		<key>DF9FE1585434B5A4D3E87A04A170871A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

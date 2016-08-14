@@ -45,6 +45,10 @@ struct URLs {
     static let post = "/api/1/new-user"
 }
 
+struct LocalURLs {
+    static let post = "new-user"
+}
+
 struct VCNames {
     static let loginViewController = "LoginViewController"
     static let main = "Main"

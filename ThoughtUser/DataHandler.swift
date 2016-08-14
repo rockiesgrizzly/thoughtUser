@@ -18,6 +18,7 @@ class DataHandler {
     }
     
     
+    
     func resetModelToOriginalValues() {
         userDict = [FieldNames.username: "",
                     FieldNames.email: "",
@@ -36,17 +37,28 @@ class DataHandler {
     func submitDataToServer() -> String? {
         var returnedError: String? = nil
         
-        if let data = convertDictionaryToJson(),
-            let url = NSURL(string: URLs.post) {
+        //for local data
+        let url = NSBundle.mainBundle().URLForResource(LocalURLs.post, withExtension: "json")
+        
+        //for web call
+        //let url = NSURL(string: URLs.post)
+        
+        if let convertedData = convertDictionaryToJson(),
+            let url = url {
             let request = NSMutableURLRequest(URL: url)
             
             request.HTTPMethod = HTTPMethods.post
+            request.cachePolicy = .ReloadIgnoringCacheData
+            request.timeoutInterval = 5
             request.setValue(JSONText.jsonValue, forHTTPHeaderField: JSONText.headerField)
-            request.HTTPBody = data
             
-            let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { (data, response, error) in
+            
+            let task = NSURLSession.sharedSession().uploadTaskWithRequest(request, fromData: convertedData, completionHandler: { (data, response, error) in
                 if error != nil {
                     returnedError = error?.localizedDescription
+                }
+                if let dataString = String(data: data!, encoding: NSUTF8StringEncoding) {
+                    NSLog(dataString)
                 }
             })
             
