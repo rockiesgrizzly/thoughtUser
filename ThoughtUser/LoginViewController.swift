@@ -90,6 +90,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         validateTextFromTextField(textField)
     }
     
+    
     func textFieldDidChange(textField: UITextField) {
         validateTextFromTextField(textField)
     }
@@ -309,8 +310,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         updateSubmitButtonInteraction()
         
         dataHandler?.resetModelToOriginalValues()
-    }
-    
-    
+    }    
 }
 

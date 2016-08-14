@@ -18,7 +18,7 @@ class DataHandler {
     }
     
     
-    
+    //MARK: Model handling
     func resetModelToOriginalValues() {
         userDict = [FieldNames.username: "",
                     FieldNames.email: "",
@@ -33,7 +33,7 @@ class DataHandler {
         }
     }
     
-    //TODO: testing
+
     func submitDataToServer() -> String? {
         var returnedError: String? = nil
         
