@@ -25,10 +25,10 @@ struct HTTPMethods {
 
 struct Notifications {
     static let postSuccess = "postSuccess"
-    static let postFailure400 = "postFailure400"
-    static let postFailure401 = "postFailure401"
-    static let postFailure403 = "postFailure403"
-    static let postFailure409 = "postFailure409"
+//    static let postFailure400 = "postFailure400"
+//    static let postFailure401 = "postFailure401"
+//    static let postFailure403 = "postFailure403"
+//    static let postFailure409 = "postFailure409"
 }
 
 struct SegueNames {
@@ -64,12 +64,12 @@ struct VCNames {
 }
 
 //MARK: Enums
-enum SubmitErrorMessages: String {
-    case failed400 = "Your submission was rejected by the server due to a bad request."
-    case failed401 = "Your submission was rejected by the server due to an unauthorized request."
-    case failed403 = "Your submission was rejected by the server due to a forbidden request."
-    case failed409 = "Your submission was rejected by the server because there's an existing record that matches yours."
-}
+//enum SubmitErrorMessages: String {
+//    case failed400 = "Your submission was rejected by the server due to a bad request."
+//    case failed401 = "Your submission was rejected by the server due to an unauthorized request."
+//    case failed403 = "Your submission was rejected by the server due to a forbidden request."
+//    case failed409 = "Your submission was rejected by the server because there's an existing record that matches yours."
+//}
 
 
 
