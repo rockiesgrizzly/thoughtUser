@@ -17,6 +17,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var submitButton: UIButton!
     
+    var displayNameSet = false
     var readyToSubmit = false
     var submissionTriggered = false
     
@@ -86,11 +87,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        validateTextFromTextField(textField)
-    }
-    
-    
     func textFieldDidChange(textField: UITextField) {
         validateTextFromTextField(textField)
     }
@@ -105,7 +101,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 updateValuesForValidateFields(true, textField: textField, fieldName: FieldNames.username, text: text)
                 
                 //set username as display name if no display name
-                if dataHandler?.userDict[FieldNames.display_name] == nil {
+                if displayNameSet == false {
                     dataHandler?.updateModelWithFieldText(FieldNames.display_name, string: text)
                 }
                 
@@ -156,8 +152,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             //Field is optional
             if let text = textField.text where text != "" {
                 updateValuesForValidateFields(true, textField: textField, fieldName: FieldNames.display_name, text: text)
+                displayNameSet = true
             } else {
                 displayNameField.backgroundColor = UIColor.whiteColor()
+                displayNameSet = false
             }
             
         default:
@@ -321,6 +319,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         userNameField.becomeFirstResponder()
         
         readyToSubmit = false
+        displayNameSet = false
         updateSubmitButtonInteraction()
         
         dataHandler?.resetModelToOriginalValues()

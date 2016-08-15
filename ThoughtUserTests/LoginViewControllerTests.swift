@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import OHHTTPStubs
 
 
 @testable import ThoughtUser

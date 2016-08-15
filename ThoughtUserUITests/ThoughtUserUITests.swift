@@ -55,7 +55,6 @@ class ThoughtUserUITests: XCTestCase {
         app.secureTextFields["Verify Password"].tap()
         app.secureTextFields["Verify Password"].typeText("achtungBaby3")
         
-        app.textFields["Display Name (Optional)"].tap()
         app.buttons["Submit"].tap()
         
         let successAlert = XCUIApplication().alerts["Success!"]
@@ -81,8 +80,7 @@ class ThoughtUserUITests: XCTestCase {
         
         app.secureTextFields["Verify Password"].tap()
         app.secureTextFields["Verify Password"].typeText("a")
-        
-        app.textFields["Display Name (Optional)"].tap()
+
         app.buttons["Submit"].tap()
         
         let failureAlert = XCUIApplication().alerts["The form isn't quite ready..."]
@@ -105,8 +103,7 @@ class ThoughtUserUITests: XCTestCase {
         
         app.secureTextFields["Verify Password"].tap()
         app.secureTextFields["Verify Password"].typeText("achtungBaby3")
-        
-        app.textFields["Display Name (Optional)"].tap()
+
         app.buttons["Submit"].tap()
         
         let failureAlert = XCUIApplication().alerts["The form isn't quite ready..."]
@@ -130,7 +127,6 @@ class ThoughtUserUITests: XCTestCase {
         app.secureTextFields["Verify Password"].tap()
         app.secureTextFields["Verify Password"].typeText("achtungBaby3")
         
-        app.textFields["Display Name (Optional)"].tap()
         app.buttons["Submit"].tap()
         
         let failureAlert = XCUIApplication().alerts["The form isn't quite ready..."]
@@ -140,7 +136,5 @@ class ThoughtUserUITests: XCTestCase {
         
     }
     
-
-
     
 }
