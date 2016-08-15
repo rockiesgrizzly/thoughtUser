@@ -23,7 +23,7 @@
                                 <rect key="frame" x="-4" y="0.0" width="328" height="568"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ThoughtUser" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4p-fI-HcD">
-                                        <rect key="frame" x="108" y="64" width="112" height="23"/>
+                                        <rect key="frame" x="108" y="64" width="113" height="23"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -94,17 +94,23 @@
                                     <constraint firstItem="a8J-SE-oZ8" firstAttribute="top" secondItem="i4p-fI-HcD" secondAttribute="bottom" constant="32" id="vwX-8o-55e"/>
                                 </constraints>
                             </scrollView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iGQ-Q4-JXs">
+                                <rect key="frame" x="150" y="423" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.090196078430000007" green="0.60784313729999995" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="u5c-Ai-L68" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="0ay-qF-za2"/>
                             <constraint firstItem="u5c-Ai-L68" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="1X1-Z3-zVY"/>
+                            <constraint firstItem="iGQ-Q4-JXs" firstAttribute="top" secondItem="AVW-lH-U0h" secondAttribute="bottom" constant="16" id="JPC-Ba-sf5"/>
                             <constraint firstItem="u5c-Ai-L68" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="g1X-sM-Jbu"/>
+                            <constraint firstItem="iGQ-Q4-JXs" firstAttribute="centerX" secondItem="u5c-Ai-L68" secondAttribute="centerX" id="jKu-LP-8tb"/>
                             <constraint firstItem="u5c-Ai-L68" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qqr-lp-o7P"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="iGQ-Q4-JXs" id="AOE-c0-eRf"/>
                         <outlet property="displayNameField" destination="wKZ-w2-lt4" id="Chl-OK-uhH"/>
                         <outlet property="emailField" destination="4XP-Xf-8Qs" id="OdM-Ba-TYf"/>
                         <outlet property="passwordField" destination="sNO-JS-wg0" id="wn6-bb-Usa"/>

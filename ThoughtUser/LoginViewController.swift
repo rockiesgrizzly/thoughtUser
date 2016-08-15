@@ -9,19 +9,20 @@
 import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
-    @IBOutlet var userNameField: UITextField!
-    @IBOutlet var emailField: UITextField!
-    @IBOutlet var passwordField: UITextField!
-    @IBOutlet var passwordVerificationField: UITextField!
-    @IBOutlet var displayNameField: UITextField!
-    
-    @IBOutlet var submitButton: UIButton!
+    @IBOutlet weak var userNameField: UITextField!
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var passwordVerificationField: UITextField!
+    @IBOutlet weak var displayNameField: UITextField!
+    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var displayNameSet = false
     var readyToSubmit = false
     var submissionTriggered = false
     
     var dataHandler: DataHandler? = DataHandler()
+    //var activityIndictator: UIActivityIndicatorView? = UIActivityIndicatorView()
     
     let localNotifier = NSNotificationCenter.defaultCenter()
     
@@ -41,6 +42,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         allTextFields = [userNameField, emailField, passwordField, passwordVerificationField, displayNameField]
         setupDelegation()
         updateSubmitButtonInteraction()
+        activityIndicator.hidesWhenStopped = true
     }
     
     
@@ -269,6 +271,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func triggerSubmission() {
         submissionTriggered = true
         
+        dispatch_async(dispatch_get_main_queue(), {
+            self.activityIndicator?.startAnimating()
+        })
+        
         dataHandler?.submitDataToServer({(error: NSError?) -> () in
             
             if error == nil {
@@ -286,14 +292,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func respondToPostResult(title: String, body: String) {
         //happens w/in the closure in triggerSubmission(), so requires switching back to main thread
         NSOperationQueue.mainQueue().addOperationWithBlock {
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.activityIndicator?.stopAnimating()
+            })
+            
             self.resetModelAndFields()
-            
-            
             
             var alert: UIAlertController?
             
-            alert = UIAlertController(title: SubmitFailedMessages.submissionSuccessful,
-                message: SubmitFailedMessages.submissionSuccessfulBody,
+            alert = UIAlertController(title: title,
+                message: body,
                 preferredStyle: .Alert)
             
             

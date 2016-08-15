@@ -55,6 +55,7 @@ struct URLs {
 
 struct LocalURLs {
     static let post = "new-user"
+    static let jsonServer = "http://localhost:3000/api/1/new-user"
 }
 
 struct VCNames {
