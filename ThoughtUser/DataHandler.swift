@@ -8,6 +8,8 @@
 import Foundation
 
 class DataHandler {
+    let localNotifier = NSNotificationCenter.defaultCenter()
+    
     var userDict = [FieldNames.username: "",
                     FieldNames.email: "",
                     FieldNames.password: "",
@@ -34,8 +36,7 @@ class DataHandler {
     }
     
 
-    func submitDataToServer() -> String? {
-        var returnedError: String? = nil
+    func submitDataToServer() {
         
         //for local data
         let url = NSBundle.mainBundle().URLForResource(LocalURLs.post, withExtension: "json")
@@ -54,9 +55,30 @@ class DataHandler {
             
             
             let task = NSURLSession.sharedSession().uploadTaskWithRequest(request, fromData: convertedData, completionHandler: { (data, response, error) in
-                if error != nil {
-                    returnedError = error?.localizedDescription
+                //TODO: 
+                if let response = response as? NSHTTPURLResponse {
+                    if response.statusCode == 400 {
+                        self.localNotifier.postNotificationName(Notifications.postFailure400, object: self)
+                        return
+                    } else if response.statusCode == 401 {
+                       //unauthorized
+                        self.localNotifier.postNotificationName(Notifications.postFailure401, object: self)
+                        return
+                    } else if response.statusCode == 403 {
+                        //forbidden
+                        self.localNotifier.postNotificationName(Notifications.postFailure403, object: self)
+                        return
+                    } else if response.statusCode == 409 {
+                        //conflict
+                        self.localNotifier.postNotificationName(Notifications.postFailure409, object: self)
+                        return
+                    }
                 }
+                
+                if error != nil {
+                    self.localNotifier.postNotificationName(Notifications.postSuccess, object: self)
+                }
+                
                 if let dataString = String(data: data!, encoding: NSUTF8StringEncoding) {
                     NSLog(dataString)
                 }
@@ -64,8 +86,6 @@ class DataHandler {
             
             task.resume()
         }
-        
-        return returnedError
     }
     
     

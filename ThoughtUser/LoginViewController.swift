@@ -45,7 +45,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewDidLoad()
-        resetModelAndFields()     
+        resetModelAndFields()
+        
+        localNotifier.addObserver(self, selector: #selector(respondToPostSuccess), name: Notifications.postSuccess, object: dataHandler)
+        localNotifier.addObserver(self, selector: #selector(respondToPost400), name: Notifications.postFailure400, object: dataHandler)
+        localNotifier.addObserver(self, selector: #selector(respondToPost401), name: Notifications.postFailure401, object: dataHandler)
+        localNotifier.addObserver(self, selector: #selector(respondToPost403), name: Notifications.postFailure403, object: dataHandler)
+        localNotifier.addObserver(self, selector: #selector(respondToPost409), name: Notifications.postFailure409, object: dataHandler)
     }
     
     
@@ -269,22 +275,58 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     func triggerSubmission() {
-        var alert: UIAlertController?
         submissionTriggered = true
         
-        if let submissionResponseError = dataHandler?.submitDataToServer() {
-            //error returned from response
-            alert = UIAlertController(title: SubmitFailedMessages.submissionFailed,
-                                      message: submissionResponseError,
-                                      preferredStyle: .Alert)
-        } else {
-            resetModelAndFields()
+        dataHandler?.submitDataToServer()
+    }
+    
+    
+    func respondToPostSuccess() {
+        resetModelAndFields()
+        
+        var alert: UIAlertController?
+        
+        alert = UIAlertController(title: SubmitFailedMessages.submissionSuccessful,
+                                  message: SubmitFailedMessages.submissionSuccessfulBody,
+                                  preferredStyle: .Alert)
+        
+        if let alert = alert {
+            let dismissAction = UIAlertAction(title: SubmitFailedMessages.dismissTitle, style: .Cancel, handler: nil)
+            alert.addAction(dismissAction)
             
-            alert = UIAlertController(title: SubmitFailedMessages.submissionSuccessful,
-                                      message: SubmitFailedMessages.submissionSuccessfulBody,
-                                      preferredStyle: .Alert)
+            dispatch_async(dispatch_get_main_queue(), {
+                self.showViewController(alert, sender: self)
+            })
         }
         
+    }
+    
+    //MARK: Failure Responses
+    func respondToPost400() {
+        respondToPostFailure(.failed400)
+    }
+    
+    
+    func respondToPost401() {
+        respondToPostFailure(.failed401)
+    }
+    
+    
+    func respondToPost403() {
+        respondToPostFailure(.failed403)
+    }
+
+    
+    func respondToPost409() {
+        respondToPostFailure(.failed409)
+    }
+    
+    
+    func respondToPostFailure(code: SubmitErrorMessages) {
+        var alert: UIAlertController?
+        alert = UIAlertController(title: SubmitFailedMessages.submissionFailed,
+                                  message: code.rawValue,
+                                  preferredStyle: .Alert)
         
         if let alert = alert {
             let dismissAction = UIAlertAction(title: SubmitFailedMessages.dismissTitle, style: .Cancel, handler: nil)
